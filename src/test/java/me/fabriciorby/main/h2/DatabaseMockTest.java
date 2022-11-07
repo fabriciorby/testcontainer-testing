@@ -3,10 +3,8 @@ package me.fabriciorby.main.h2;
 import me.fabriciorby.main.data.Person;
 import me.fabriciorby.main.repository.PersonRepository;
 import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.DynamicPropertyRegistry;
-import org.springframework.test.context.DynamicPropertySource;
 
 import java.util.Optional;
 
@@ -16,18 +14,11 @@ import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.hasProperty;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@DataJpaTest
 public class DatabaseMockTest {
 
     @MockBean
     PersonRepository personRepository;
-
-    @DynamicPropertySource
-    static void registerMySQLProperties(DynamicPropertyRegistry registry) {
-        registry.add("spring.datasource.url", () -> "jdbc:h2:mem:db;DB_CLOSE_ON_EXIT=FALSE");
-        registry.add("spring.datasource.username", () -> "sa");
-        registry.add("spring.datasource.password", () -> "password");
-    }
 
     @Test
     void personShouldBeInserted() {
